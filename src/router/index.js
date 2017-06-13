@@ -1,21 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
-import food from '@/components/food'
+import Index from '../pages/indexPage/index.vue'
 
 Vue.use(Router)
 
 export default new Router({
+	mode: 'history',
   routes: [
-    {
-      path: '/Hello',
-      name: 'Hello',
-      component: Hello
-    },
-     {
-      path: '/food',
-      name: 'food',
-      component: food
-    }
+  {
+  path: '/',
+  component: Index
+  }
   ]
 })
