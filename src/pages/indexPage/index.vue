@@ -3,14 +3,13 @@
     <div class="aside">
     	<div class="products">
     		<div class="title">全部产品</div>
-    		<div class="products-list">
-    			<div class="subtitle">{{productList.pc.title}}</div>
-	    		<ul class="pc-products">
-	    			<li v-for='pcItem in productList.pc.list' class="pc-item"><a :href='pcItem.url'>{{pcItem.name}}</a><span v-if='pcItem.type===1' class="hot-active">hot</span></li>
-	    		</ul>
-	    		<div class="subtitle">{{productList.app.title}}</div>
-	    		<ul class="app-products">
-	    			<li v-for='appItem in productList.app.list' class="app-item"><a :href="appItem.url">{{appItem.name}}</a><span v-if='appItem.type===1' class="hot-active">hot</span></li>
+    		<div class="products-item" v-for='product in productList'>
+	    		<h2 class="subtitle">{{product.title}}</h2>
+	    		<ul>
+	    			<li v-for='item in product.list'  class="products-list">
+	    				<a :href="item.url">{{item.name}}</a>
+	    				<span class="hot-active" v-if='item.type===1'>hot</span></li>
+	    			</li>
 	    		</ul>
     		</div>
     	</div>
@@ -26,117 +25,59 @@
     	</div>
     </div>
     <div class="main">
-    	<div class="broad-wrapper">
-    		<div class="broad-list">
-    			<div v-for='item in broadList'>
-    				<div class="logo">
-    					<!-- <img :src="item.src" alt=""> -->
-    					<img :src="item.url" height="100" width="100" alt="">
-    				</div>
-    				<div class="content">
-    					<h1 class="title">{{item.title}}</h1>
-    					<div class="dec">{{item.description}}</div>
-    					<div class="pay">立即购买</div>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
-    </div>
+	    <div class="carousel-wrapper">
+	    	<carousel></carousel>
+	    </div>
+  		<div class="broad-list">
+  			<div v-for='item in broadList' class="list-item">
+	  			<div class="list-wrapper">
+	  				<div class="logo">
+	  					<img :src="item.url" height="100" width="100" alt="">
+	  				</div>
+	  				<div class="content">
+	  					<h1 class="title">{{item.title}}</h1>
+	  					<div class="dec">{{item.description}}</div>
+	  					<div class="pay"><a href="#">{{item.pay}}</a></div>
+	  				</div>
+	  			</div>
+  			</div>
+  		</div>
+  </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import carousel from '../../components/carousel/carousel.vue'
+// import login from '../../components/login/login.vue'
 export default {
 	data() {
 		return {
-			newsList: [
-				{
-					title: '阿杜39分勇士4-1复仇骑士夺冠',
-					url: 'http://baidu.com'
-				},
-				{
-					title: '毫无悬念!杜兰特荣膺总决赛MVP',
-					url: '/'
-				},
-				{
-					title: '库里仅2三分也赢',
-					url: '/',
-					type: 1
-				},
-				{
-					title: '厄文末节6中0',
-					url: '/'
-				}
-			],
-			productList: {
-				pc: {
-					title: 'PC产品',
-					list: [
-						{
-							name: '数据统计',
-							url: 'http://baidu.com'
-						},
-						{
-							name: '数据预测',
-							url: '/'
-						},
-						{
-							name: '流量分析',
-							url: '/',
-							type: 1
-						},
-						{
-							name: '广告发布',
-							url: '/'
-						}
-					]
-				},
-				app: {
-					title: '手机应用类',
-					list: [
-						{
-							name: 'App store',
-							url: '/'
-						},
-						{
-							name: '华为应用',
-							url: '/',
-							type: 1
-						},
-						{
-							name: 'Google Play',
-							url: '/'
-						},
-						{
-							name: 'Tencent',
-							url: '/'
-						}
-					]
-				}
-			},
-			broadList: [
-				{
-					title: '开发产品',
-					description: '开发产品是一种产品',
-					url: '1.png'
-				},
-				{
-					title: '品牌营销',
-					description: '品牌营销帮助你的产品更好地找到定位',
-					url: './2.png'
-				},
-				{
-					title: '使命必达',
-					description: '使命必达快速迭代永远保持最前端的速度',
-					url: './3.png'
-				},
-				{
-					title: '勇攀高峰',
-					description: '帮你勇闯高峰，到达事业的顶峰',
-					url: './4.png'
-				}
-			]
+			newsList: [],
+			productList: {},
+			broadList: []
 		}
+	},
+	created() {
+		function getNewsList() {
+			return axios.get('/api/newsList')
+		}
+		function getProductList() {
+			return axios.get('/api/productList')
+		}
+		function getBroadList() {
+			return axios.get('/api/broadList')
+		}
+		axios.all([getNewsList(), getBroadList(), getProductList()])
+			.then(axios.spread((news, broad, product) => {
+				this.newsList = news.data.data
+				this.productList = product.data.data
+				this.broadList = broad.data.data
+			}))
+	},
+	components: {
+		carousel
+		// login
 	}
 }
 </script>
@@ -158,30 +99,29 @@ export default {
 				font-size 16px
 				background #4fc08d
 				color #fff
-			.products-list
-				padding 0 15px
+			.products-item
+				padding 0 15px 8px 15px
+				border-bottom 1px solid rgba(7,17,27,0.1)
+				&:last-child
+					border-bottom 0
 				.subtitle
-					margin 15px 0 5px 0
+					margin 15px 0 8px 0
 					line-height 14px
 					font-size 14px
 					font-weight 700
 					color rgba(0,0,0,0.7)
-				.pc-products
-					padding-bottom 8px
-					border-bottom 1px solid rgba(7,17,27,0.1)
-					.pc-item
-						padding 5px
-				.app-products
-					padding-bottom 8px
-					.app-item
-						padding 5px
-				.hot-active
-					margin-left 5px
-					vertical-align top
-					font-size 10px
-					background rgb(240,20,20)
-					color #fff
-					border-radius 3px
+				.products-list
+					margin-bottom 5px
+					&:last-child
+						margin-bottom 0
+					.hot-active
+						padding 0 2px
+						margin-left 5px
+						vertical-align top
+						font-size 10px
+						background rgb(240,20,20)
+						color #fff
+						border-radius 3px
 		.info
 			.news-list
 				padding 15px
@@ -192,4 +132,42 @@ export default {
 						padding-bottom 0
 	.main
 		flex 1
+		.carousel-wrapper
+			margin-top 15px
+		.broad-list
+			.list-item
+				display inline-block
+				width 440px
+				height 145px
+				margin 20px 20px 0 0
+				&:nth-child(even)
+					margin 0
+				.list-wrapper
+					display flex
+					width 100%
+					height 100%
+					background #fff
+					padding 15px
+					box-sizing border-box
+					.logo
+						flex 0 0 100px
+						margin-right 20px
+					.content
+						flex 1
+						margin-top 5px
+						.title
+							font-weight 700
+							color rgba(0,0,0,0.7)
+						.dec
+							margin 15px 0
+							font-size 14px
+							color rgb(7,17,27)
+						.pay
+							&>a
+								display inline-block
+								padding 10px 20px
+								color #fff
+								background #4fc08d
+								border-radius 5px
+								text-decoration none
 </style>
