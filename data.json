@@ -24,20 +24,28 @@
 			"list": [
 				{
 					"name": "数据统计",
-					"url": "http://baidu.com"
+					"path": "count",
+					"id": 23477,
+					"url": "https://www.google.com/"
 				},
 				{
 					"name": "数据预测",
-					"url": "/"
+					"path": "forecast",
+					"id": 432324,
+					"url": "https://www.google.com/"
 				},
 				{
 					"name": "流量分析",
-					"url": "/",
+					"path": "analysis",
+					"id": 57657,
+					"url": "https://www.google.com/",
 					"type": 1
 				},
 				{
 					"name": "广告发布",
-					"url": "/"
+					"path": "publish",
+					"id": 888565,
+					"url": "https://www.google.com/"
 				}
 			]
 		},
@@ -89,5 +97,9 @@
 			"url": "http://wx3.sinaimg.cn/mw690/006p2lMSgy1fgkjm4ube0j302s02s3yj.jpg",
 			"pay": "立即购买"
 		}
-	]
+	],
+	"login": {
+		"username": "AuthorJim",
+		"userId": "0828012"
+	}
 }

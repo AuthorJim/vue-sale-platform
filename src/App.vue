@@ -6,9 +6,11 @@
 		    	<a href="/"><img src="../static/logo.png" height="40" width="40" alt=""></a>
 		    </div>
 		    <ul class="nav">
-		    	<li class="item"><span @click='modalLoginShow'>登陆</span></li>
-		    	<li class="item" @click='modalRegisterShow'><span>注册</span></li>
-		    	<li class="item" @click='modalAboutShow'><span>关于</span></li>
+			    <li class="item" v-if='username!==""'>{{username}}</li>
+		    	<li class="item" @click='loginShow' v-if="username===''">登陆</li>
+		    	<li class="item" @click='registerShow' v-if="username===''">注册</li>
+		    	<li class="item" @click='loginOut' v-if='username!==""'>退出</li>
+		    	<li class="item" @click='aboutShow'>关于</li>
 		    </ul>
 	    </div>
 	  </div>
@@ -24,38 +26,57 @@
 	    	<div class="line"></div>
 	    </div>
 	  </div>
-	  <modal :isShow='modalLoginShow' @closeMe='hideModal'>
-	  	<h1>Login button</h1>
+	  <!-- 登陆弹窗 -->
+	   <modal :isShowModal='showLoginModal' @closeMe='hide("showLoginModal")'>
+	  	<login @has-log='successLogin'></login>
 	  </modal>
-	  <modal :isShow='modalRegisterShow' @closeMe='hideModal'>
-	  	<h1>register page</h1>
+	  <!-- 注册弹窗 -->
+	  <modal :isShowModal='showRegisterModal' @closeMe='hide("showRegisterModal")'>
+	  	Register
 	  </modal>
-	  <modal :isShow='modalAboutShow' @closeMe='hideModal'>
-	  	<h1>about me</h1>
+	  <!-- 关于弹窗 -->
+	  <modal :isShowModal='showAboutModal' @closeMe='hide("showAboutModal")'>
+	  	<p class="about">当有人逼迫你去突破自己，你要感恩他。他是你生命中的贵人,也许你会因此而改变和蜕变。当没有人逼迫你，请自己逼迫自己，因为真正的改变是自己想改变。蜕变的过程是很痛苦的，但每一次的蜕变都会有成长的惊喜。</p>
 	  </modal>
   </div>
 </template>
 
 <script>
 import modal from './components/modal/modal.vue'
+import login from './components/login/login.vue'
 export default {
 	data() {
 		return {
-			modalLoginShow: false,
-			modalRegisterShow: false,
-			modalAboutShow: false
+			showAboutModal: false,
+			showRegisterModal: false,
+			showLoginModal: false,
+			username: ''
 		}
 	},
 	methods: {
-		modalLoginShow() {
-			this.modalLoginShow = true
+		aboutShow() {
+			this.showAboutModal = true
 		},
-		hideModal() {
-			this.modalLoginShow = false
+		registerShow() {
+			this.showRegisterModal = true
+		},
+		loginShow() {
+			this.showLoginModal = true
+		},
+		hide(attr) {
+			this[attr] = false
+		},
+		successLogin(res) {
+			this.username = res.data.username
+			this.showLoginModal = false
+		},
+		loginOut() {
+			this.username = ''
 		}
 	},
 	components: {
-		modal
+		modal,
+		login
 	}
 }
 </script>
@@ -93,11 +114,10 @@ export default {
 					font-size 14px
 					border-right 1px solid rgb(147,153,159)	
 					cursor pointer
+					color rgb(147,153,159)
 					&:last-child
 						padding-right 0
 						border-right-width 0
-					&>span
-						color rgb(147,153,159)
 	.container
 		flex 1
 		background #f3f5f7
@@ -119,4 +139,12 @@ export default {
 				font-size 12px
 				font-style italic
 				color rgb(147,153,159)
+	.modal
+		.about
+			padding 10px
+			text-indent 2em
+			margin-right 10px
+			font-size 14px
+			line-height 24px
+			color rgb(7,17,27)
 </style>

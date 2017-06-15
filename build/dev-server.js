@@ -25,6 +25,7 @@ var appData = require('../data.json')
 var newsList = appData.newsList
 var productList = appData.productList
 var broadList = appData.broadList
+var login = appData.login
 var apiRoutes = express.Router()
 apiRoutes.get('/newsList', function (req,res) {
   res.json({
@@ -42,6 +43,12 @@ apiRoutes.get('/broadList', function (req,res) {
   res.json({
     errno: 0,
     data: broadList
+  })
+})
+apiRoutes.get('/login', function (req,res) {
+  res.json({
+    errno: 0,
+    data: login
   })
 })
 app.use('/api', apiRoutes)

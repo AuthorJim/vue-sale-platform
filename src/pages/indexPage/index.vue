@@ -49,7 +49,6 @@
 <script>
 import axios from 'axios'
 import carousel from '../../components/carousel/carousel.vue'
-// import login from '../../components/login/login.vue'
 export default {
 	data() {
 		return {

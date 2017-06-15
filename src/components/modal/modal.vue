@@ -1,23 +1,25 @@
 <template>
-  <div class="modal" v-if='isShow'>
-	  <div class="modal-cover" @click='closeModal'></div>
-	  <div class="modal-content">
-	  	<p class="modal-close" @click='closeModal'>x</p>
-	  	<slot>empty</slot>
-	  </div>
+  <div class="modal">
+	  <div class="modal-cover" @click='closemModal' v-if='isShowModal'></div>
+	  <transition name='drop'>
+	  	<div class="modal-content" v-if='isShowModal'>
+		  	<p class="modal-close" @click='closemModal'>x</p>
+		  	<slot>empty</slot>
+		  </div>
+	  </transition>
   </div>
 </template>
 
 <script>
 export default {
 	props: {
-		isShow: {
+		isShowModal: {
 			type: Boolean,
 			default: false
 		}
 	},
 	methods: {
-		closeModal() {
+		closemModal() {
 			this.$emit('closeMe')
 		}
 	}
@@ -27,9 +29,6 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
 .modal
 	position fixed
-	overflow hidden
-	width 100%
-	height 100%
 	.modal-cover
 		position fixed
 		left 0
@@ -40,15 +39,22 @@ export default {
 		z-index 15
 	.modal-content
 		position fixed
-		width 30%
+		width 31%
 		max-height 50%
 		left 50%
-		top 50%
+		top 40%
 		padding 15px
 		transform translate(-50%,-50%)
 		background #fff
 		box-shadow 0 0 2px #eee
 		z-index 20
+		&.drop-enter-active
+			transition all 0.8s ease 
+		&.drop-leave-active
+			transition all 0.5s ease
+		&.drop-enter,&.drop-leave-active
+			transform translate(-220px, -500px)
+			opacity 0
 		.modal-close
 			position absolute
 			right 5px
