@@ -2,6 +2,8 @@
 
 > a sale platform based on Vue.js
 
+live demo
+
 ## Build Setup
 
 ``` bash
