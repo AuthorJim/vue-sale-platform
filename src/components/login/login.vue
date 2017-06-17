@@ -86,6 +86,8 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus">
 .login
+	width 350px
+	height 200px
 	margin-right 20px
 	.title
 		line-height 24px

@@ -39,7 +39,7 @@ export default {
 		z-index 15
 	.modal-content
 		position fixed
-		width 31%
+		width 350px
 		max-height 50%
 		left 50%
 		top 40%
@@ -49,11 +49,11 @@ export default {
 		box-shadow 0 0 2px #eee
 		z-index 20
 		&.drop-enter-active
-			transition all 0.8s ease 
+			transition all .8s ease 
 		&.drop-leave-active
-			transition all 0.5s ease
+			transition all .5s ease
 		&.drop-enter,&.drop-leave-active
-			transform translate(-220px, -500px)
+			transform translate(-200px, -500px)
 			opacity 0
 		.modal-close
 			position absolute

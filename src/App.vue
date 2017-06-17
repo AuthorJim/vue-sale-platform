@@ -3,7 +3,7 @@
     <div class="header">
 	    <div class="header-wrapper ">
 	    	<div class="logo">
-		    	<a href="/"><img src="../static/logo.png" height="40" width="40" alt=""></a>
+		    	<router-link to='/' class='logo-img'><img src="../static/logo.png" alt="" width="40" height="40"></router-link>
 		    </div>
 		    <ul class="nav">
 			    <li class="item" v-if='username!==""'>{{username}}</li>
@@ -89,17 +89,18 @@ export default {
 	min-height 100%
 	.header
 		position relative
-		width 100%
 		height 60px
 		background #e3e4e1
 		.header-wrapper
 			width 1200px
+			height 60px
 			margin 0 auto
+			background #e3e4e1
 			.logo
 				float left
 				line-height 40px
 				padding 10px 0
-				&>a
+				.logo-img
 					display block
 					width 40px
 					height 40px
@@ -120,6 +121,8 @@ export default {
 						border-right-width 0
 	.container
 		flex 1
+		width 100%
+		height 100%
 		background #f3f5f7
 	.footer
 		width 100%

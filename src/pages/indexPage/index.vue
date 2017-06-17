@@ -7,7 +7,8 @@
 	    		<h2 class="subtitle">{{product.title}}</h2>
 	    		<ul>
 	    			<li v-for='item in product.list'  class="products-list">
-	    				<a :href="item.url">{{item.name}}</a>
+	    				<!-- <a :href="item.url">{{item.name}}</a> -->
+	    				<router-link :to='{path: item.url}'>{{item.name}}</router-link>
 	    				<span class="hot-active" v-if='item.type===1'>hot</span></li>
 	    			</li>
 	    		</ul>
@@ -37,7 +38,9 @@
 	  				<div class="content">
 	  					<h1 class="title">{{item.title}}</h1>
 	  					<div class="dec">{{item.description}}</div>
-	  					<div class="pay"><a href="#">{{item.pay}}</a></div>
+	  					<div class="pay">
+	  						<router-link class='pay-item' :to="{path: item.path}">{{item.pay}}</router-link>
+	  					</div>
 	  				</div>
 	  			</div>
   			</div>
@@ -89,10 +92,10 @@ export default {
 	.aside
 		flex 0 0 270px
 		margin 15px
-		box-shadow 0 0 1px #ddd
 		.products,.info
 			margin-bottom 15px
 			background #fff
+			box-shadow 0 0 1px #ddd
 			.title
 				padding 10px 15px
 				font-size 16px
@@ -162,7 +165,7 @@ export default {
 							font-size 14px
 							color rgb(7,17,27)
 						.pay
-							&>a
+							.pay-item
 								display inline-block
 								padding 10px 20px
 								color #fff
