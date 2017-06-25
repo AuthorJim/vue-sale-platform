@@ -86,7 +86,7 @@ export default {
 	display flex
 	position relative
 	flex-flow column
-	min-height 100%
+	min-height 100vh
 	.header
 		position relative
 		height 60px

@@ -76,7 +76,6 @@ export default {
 		.controller-item
 			display inline-block
 			color #fff
-			font-size 0
 			margin-right 6px
 			cursor pointer
 			&:last-child
@@ -85,6 +84,7 @@ export default {
 				display block
 				width 10px
 				height 10px
+				font-size 0
 				border-radius 50%
 				background #fff
 				&.active
